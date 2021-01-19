@@ -147,7 +147,13 @@
 
 		  if (distance < 0) {
 			clearInterval(x);
-			window.location = Dates[data][3];
+			if(Dates[data][2].includes("AG"))
+			{
+				window.open(Dates[data][3], "aaicTest", "width="+screen.width+",height="+screen.height+",toolbar=0,location=0, directories=0, status=0,location=no,menubar=0");
+			}
+			else {
+				window.location = Dates[data][3];
+			}
 		  }
 		}, 1000);
 		
