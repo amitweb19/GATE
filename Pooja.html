@@ -1,0 +1,175 @@
+<html>
+<head>
+<title>GATE 2021</title>
+<style>
+	table, th, td {
+	  border: 1px solid black;
+	  border-collapse: collapse;
+	}
+	th,td {
+	  text-align: center;
+	}
+
+	.modal {
+	  display: none;
+	  position: fixed;
+	  z-index: 1;
+	  left: 0;
+	  top: 0;
+	  width: 100%;
+	  height: 100%;
+	  overflow: auto;
+	  background-color: rgb(0,0,0);
+	  background-color: rgba(0,0,0,0.4);
+	}
+
+	.modal-content {
+	  background-color: #fefefe;
+	  margin: 13% auto;
+	  padding: 20px;
+	  border: 1px solid #888;
+	  width: 50%;
+	}
+
+	.close {
+	  color: #aaa;
+	  float: right;
+	  font-size: 28px;
+	  font-weight: bold;
+	}
+
+	.close:hover,
+	.close:focus {
+	  color: black;
+	  text-decoration: none;
+	  cursor: pointer;
+	}
+</style>
+</head>
+<body>
+<center>
+	<div id="myModal" class="modal">
+	  <div class="modal-content">
+		<span class="close">&times;</span>
+		<div id="schedules"></div>
+	  </div>
+	</div>
+	<h1 id="header" style="color: #006400;"></h1>
+	<div id="time" style="margin-top: 300px; color: #F00;"></div>
+	<div id="login" style="margin-top: 500px;"></div>
+	<button id="myBtn" style="cursor: pointer;">See Schedule</button>
+</center>
+<script>
+	var today = new Date();
+	var dd = String(today.getDate()).padStart(2, '0');
+	var mm = String(today.getMonth()).padStart(2, '0'); //January is 0!
+	var yyyy = today.getFullYear();
+
+	today = new Date( yyyy, mm, dd);
+	var todayTime = today.getTime();
+
+	var Dates = [		
+		["Jan 24, 2021", "15:00:00", "GATE 2016-1", "https://gateoverflow.in/quiz/?exam_id=8"],
+		["Jan 27, 2021", "20:30:00", "GATE 2016-2", "https://gateoverflow.in/quiz/?exam_id=9"],
+		["Jan 30, 2021", "15:00:00", "GATE 2017-1", "https://gateoverflow.in/quiz/?exam_id=76"],
+		["Jan 31, 2021", "15:00:00", "GATE 2017-2", "https://gateoverflow.in/quiz/?exam_id=75"],
+		["Feb 03, 2021", "20:30:00", "GATE 2018", "https://gateoverflow.in/quiz/?exam_id=88"],
+		["Feb 06, 2021", "15:00:00", "GATE 2019", "https://gateoverflow.in/quiz/?exam_id=141"],
+		["Feb 07, 2021", "15:00:00", "GATE 2020", "https://gateoverflow.in/quiz/?exam_id=218"]
+	];
+	var arrayLength = Dates.length;
+	var data = -1;
+	var nextTime;
+	var arrayTime;
+	
+	var schedule = '<table style="width:50%"><tr><th bgcolor="green">DATE</th><th bgcolor="green">TEST</th></tr>';
+	
+	for (var i = 0; i < arrayLength; i++) {
+		arrayTime = new Date(Dates[i][0]).getTime();
+		if(arrayTime === todayTime)
+		{
+			data = i;
+			schedule = schedule +"<tr><td bgcolor='yellow'>"+Dates[i][0]+"</td><td bgcolor='yellow'>"+Dates[i][2]+"</td></tr>";
+		} else if(arrayTime < todayTime)
+		{
+			nextTime = i;
+			schedule = schedule +"<tr><td bgcolor='#ccc'>"+Dates[i][0]+"</td><td bgcolor='#ccc'>"+Dates[i][2]+"</td></tr>";
+		} else {
+			schedule = schedule +"<tr><td>"+Dates[i][0]+"</td><td>"+Dates[i][2]+"</td></tr>";
+		}
+	}
+	schedule = schedule + "</table>";
+	document.getElementById("schedules").innerHTML = schedule;
+	
+	
+	if(data === -1)
+	{
+		document.getElementById("header").innerHTML = "Today, there is no test.<br>Only Revision.";
+		document.getElementById("time").innerHTML = "Next Test is on "+Dates[nextTime+1][0];
+		document.getElementById("login").innerHTML = Dates[nextTime+1][2];
+	}
+	else
+	{
+		document.getElementById("header").innerHTML = Dates[data][2];
+		if(Dates[data][2].includes("AG")) {
+			document.getElementById("login").innerHTML = '<h2><a href="https://gate.appliedroots.com/login" target="_blank">Check Login Status</a></h2>';
+		} else {
+			document.getElementById("login").innerHTML = '<h2><a href="https://gateoverflow.in/login" target="_blank">Check Login Status</a></h2>';
+		}
+		var countDownDate = new Date(Dates[data][0]+" "+Dates[data][1]).getTime();
+
+		// Update the count down every 1 second
+		var x = setInterval(function() {
+
+		  var now = new Date().getTime();
+		  var distance = countDownDate - now;
+
+		  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+		  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+		  document.getElementById("time").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+
+		  if (distance < 0) {
+			clearInterval(x);
+			if(Dates[data][2].includes("AG"))
+			{
+				window.open(Dates[data][3], "aaicTest", "width="+screen.width+",height="+screen.height+",toolbar=0,location=0, directories=0, status=0,location=no,menubar=0");
+			}
+			else {
+				window.location = Dates[data][3];
+			}
+			
+		  }
+		}, 1000);	
+	}
+	
+	// Get the modal
+	var modal = document.getElementById("myModal");
+
+	// Get the button that opens the modal
+	var btn = document.getElementById("myBtn");
+
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+
+	// When the user clicks on the button, open the modal
+	btn.onclick = function() {
+	  modal.style.display = "block";
+	}
+
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function() {
+	  modal.style.display = "none";
+	}
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+	  if (event.target == modal) {
+		modal.style.display = "none";
+	  }
+	}
+</script>
+</body>
+</html>
