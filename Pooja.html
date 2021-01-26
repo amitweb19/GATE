@@ -69,13 +69,13 @@
 	var todayTime = today.getTime();
 
 	var Dates = [		
-		["Jan 24, 2021", "15:00:00", "GATE 2016-1", "https://gateoverflow.in/quiz/?exam_id=8"],
-		["Jan 27, 2021", "20:30:00", "GATE 2016-2", "https://gateoverflow.in/quiz/?exam_id=9"],
-		["Jan 30, 2021", "15:00:00", "GATE 2017-1", "https://gateoverflow.in/quiz/?exam_id=76"],
-		["Jan 31, 2021", "15:00:00", "GATE 2017-2", "https://gateoverflow.in/quiz/?exam_id=75"],
-		["Feb 03, 2021", "20:30:00", "GATE 2018", "https://gateoverflow.in/quiz/?exam_id=88"],
-		["Feb 06, 2021", "15:00:00", "GATE 2019", "https://gateoverflow.in/quiz/?exam_id=141"],
-		["Feb 07, 2021", "15:00:00", "GATE 2020", "https://gateoverflow.in/quiz/?exam_id=218"]
+		["Jan 24, 2021", "15:00:00", "GATE 2016-1", "https://gateoverflow.in/quiz/?exam_id=8", "https://gateoverflow.in/exam/8/gate-2016-1"],
+		["Jan 27, 2021", "20:30:00", "GATE 2016-2", "https://gateoverflow.in/quiz/?exam_id=9", "https://gateoverflow.in/exam/9/gate-2016-2"],
+		["Jan 30, 2021", "15:00:00", "GATE 2017-1", "https://gateoverflow.in/quiz/?exam_id=76", "https://gateoverflow.in/exam/76/gate-2017-set-1"],
+		["Jan 31, 2021", "15:00:00", "GATE 2017-2", "https://gateoverflow.in/quiz/?exam_id=75", "https://gateoverflow.in/exam/75/gate-2017-set-2"],
+		["Feb 03, 2021", "20:30:00", "GATE 2018", "https://gateoverflow.in/quiz/?exam_id=88", "https://gateoverflow.in/exam/88/gate2018"],
+		["Feb 06, 2021", "15:00:00", "GATE 2019", "https://gateoverflow.in/quiz/?exam_id=141", "https://gateoverflow.in/exam/141/gate-2019"],
+		["Feb 07, 2021", "15:00:00", "GATE 2020", "https://gateoverflow.in/quiz/?exam_id=218", "https://gateoverflow.in/exam/218/gate-cse-2020"]
 	];
 	var arrayLength = Dates.length;
 	var data = -1;
@@ -93,7 +93,7 @@
 		} else if(arrayTime < todayTime)
 		{
 			nextTime = i;
-			schedule = schedule +"<tr><td bgcolor='#ccc'>"+Dates[i][0]+"</td><td bgcolor='#ccc'>"+Dates[i][2]+"</td></tr>";
+			schedule = schedule +"<tr><td bgcolor='#ccc'>"+Dates[i][0]+"</td><td bgcolor='#ccc'><a href='"+Dates[i][4]+"'>"+Dates[i][2]+"</a></td></tr>";
 		} else {
 			schedule = schedule +"<tr><td>"+Dates[i][0]+"</td><td>"+Dates[i][2]+"</td></tr>";
 		}
